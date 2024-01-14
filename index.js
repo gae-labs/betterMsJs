@@ -33,7 +33,7 @@ module.exports = function (val, options) {
   }
   throw new Error(
     'val is not a non-empty string or a valid number. val=' +
-      JSON.stringify(val)
+    JSON.stringify(val)
   );
 };
 
@@ -47,59 +47,24 @@ module.exports = function (val, options) {
 
 function parse(str) {
   str = String(str);
-  if (str.length > 100) {
-    return;
-  }
-  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
-    str
+
+  const l_Regex = /^((?<yearsValue>-?\d*\.?\d*)\s*(>years?|yrs?|y))?\s*((?<weeksValue>-?\d*\.?\d*)\s*(weeks?|w))?\s*((?<daysValue>-?\d*\.?\d*)\s*(days?|d))?\s*((?<hoursValue>-?\d*\.?\d*)\s*(hours?|hrs?|h))?\s*((?<minsValue>-?\d*\.?\d*)\s*(minutes?|mins?|m(?!s|i)))?\s*((?<secsValue>-?\d*\.?\d*)\s*(seconds?|secs?|s))?\s*((?<msecsValue>-?\d*\.?\d*)\s*(milliseconds?|msecs?|ms|$))?/gim;
+
+  const { groups: { yearsValue, weeksValue, daysValue, hoursValue, minsValue, secsValue, msecsValue } } = l_Regex.exec(
+    str,
   );
-  if (!match) {
-    return;
-  }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'weeks':
-    case 'week':
-    case 'w':
-      return n * w;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
+
+  let l_TotalMS = 0;
+
+  if (yearsValue != undefined) l_TotalMS += parseFloat(yearsValue) * y;
+  if (weeksValue != undefined) l_TotalMS += parseFloat(weeksValue) * w;
+  if (daysValue != undefined) l_TotalMS += parseFloat(daysValue) * d;
+  if (hoursValue != undefined) l_TotalMS += parseFloat(hoursValue) * h;
+  if (minsValue != undefined) l_TotalMS += parseFloat(minsValue) * m;
+  if (secsValue != undefined) l_TotalMS += parseFloat(secsValue) * s;
+  if (msecsValue != undefined) l_TotalMS += parseFloat(msecsValue);
+
+  return l_TotalMS;
 }
 
 /**
