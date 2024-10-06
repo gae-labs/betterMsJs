@@ -1,42 +1,56 @@
-# ms
+# BetterMsJs
+##### Based on [vercel/ms](https://github.com/vercel/ms)[ @ v2.1.3](https://github.com/vercel/ms/tree/2.1.3)
 
 ![CI](https://github.com/vercel/ms/workflows/CI/badge.svg)
 
 Use this package to easily convert various time formats to milliseconds.
 
+## Comparison with `ms`
+
+BetterMsJs is a fork of the original `ms` package. BetterMsJs implements the support for multiple time units in a single input string, such as `1d6h30m`. This allows for more flexibility in the input format. The original `ms` package only supports a single time unit in the input string.
+
+ ### Breaking Changes compared to `ms`
+
+ - This package now returns a ms value on inputs like `1d 2h 3m 4s` instead of `NaN`, this could be a breaking change if you were relying on the previous behavior.
+ - This package now returns `NaN` on inputs that contain multiple decimal points like `1.2.3.4s` instead of `undefined`, this could be a breaking change if you were relying on the previous behavior.
+ - This package now accepts inputs greater than 100 characters, this could be a breaking change if you were relying on the previous behavior.
+
 ## Examples
 
 ```js
-ms('2 days')  // 172800000
-ms('1d')      // 86400000
-ms('10h')     // 36000000
-ms('2.5 hrs') // 9000000
-ms('2h')      // 7200000
-ms('1m')      // 60000
-ms('5s')      // 5000
-ms('1y')      // 31557600000
-ms('100')     // 100
-ms('-3 days') // -259200000
-ms('-1h')     // -3600000
-ms('-200')    // -200
+betterMsJs('2 days 6 hours 30 minutes 15 seconds') // 183615000
+betterMsJs('1d 2h 3m 4s') // 93784000
+betterMsJs('1d2h3m4s') // 93784000
+betterMsJs('2 days')  // 172800000
+betterMsJs('1d')      // 86400000
+betterMsJs('10h')     // 36000000
+betterMsJs('2.5 hrs') // 9000000
+betterMsJs('2h')      // 7200000
+betterMsJs('1m')      // 60000
+betterMsJs('5s')      // 5000
+betterMsJs('1y')      // 31557600000
+betterMsJs('100')     // 100
+betterMsJs('-3 days') // -259200000
+betterMsJs('-1h')     // -3600000
+betterMsJs('-200')    // -200
 ```
 
 ### Convert from Milliseconds
 
 ```js
-ms(60000)             // "1m"
-ms(2 * 60000)         // "2m"
-ms(-3 * 60000)        // "-3m"
-ms(ms('10 hours'))    // "10h"
+betterMsJs(60000)             // "1m"
+betterMsJs(2 * 60000)         // "2m"
+betterMsJs(-3 * 60000)        // "-3m"
+betterMsJs(betterMsJs('10 hours'))    // "10h"
 ```
 
 ### Time Format Written-Out
 
 ```js
-ms(60000, { long: true })             // "1 minute"
-ms(2 * 60000, { long: true })         // "2 minutes"
-ms(-3 * 60000, { long: true })        // "-3 minutes"
-ms(ms('10 hours'), { long: true })    // "10 hours"
+betterMsJs(60000, { long: true })             // "1 minute"
+betterMsJs(2 * 60000, { long: true })         // "2 minutes"
+betterMsJs(-3 * 60000, { long: true })        // "-3 minutes"
+betterMsJs(betterMsJs('10 hours'), { long: true })    // "10 hours"
 ```
 
 ## Features
