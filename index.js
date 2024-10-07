@@ -50,9 +50,7 @@ function parse(str) {
 
   const l_Regex = /^((?<yearsValue>-?\d*\.?\d*)\s*(>years?|yrs?|y))?\s*((?<weeksValue>-?\d*\.?\d*)\s*(weeks?|w))?\s*((?<daysValue>-?\d*\.?\d*)\s*(days?|d))?\s*((?<hoursValue>-?\d*\.?\d*)\s*(hours?|hrs?|h))?\s*((?<minsValue>-?\d*\.?\d*)\s*(minutes?|mins?|m(?!s|i)))?\s*((?<secsValue>-?\d*\.?\d*)\s*(seconds?|secs?|s))?\s*((?<msecsValue>-?\d*\.?\d*)\s*(milliseconds?|msecs?|ms|$))?/gim;
 
-  const l_Match = l_Regex.exec(
-    str,
-  );
+  const l_Match = l_Regex.exec(str);
 
   if (!l_Match || Object.values(l_Match.groups).every(group => group === null || group === undefined)) {
     return NaN;
