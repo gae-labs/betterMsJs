@@ -1,7 +1,7 @@
 # BetterMsJs
 ##### Based on [vercel/ms](https://github.com/vercel/ms)[ @ v2.1.3](https://github.com/vercel/ms/tree/2.1.3)
 
-![CI](https://github.com/vercel/ms/workflows/CI/badge.svg)
+![CI](https://github.com/gae-labs/betterMsJs/workflows/CI/badge.svg)
 
 Use this package to easily convert various time formats to milliseconds.
 
