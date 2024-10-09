@@ -308,4 +308,12 @@ describe('BetterMsJS - Breaking Changes compared to vercel/ms 2.1.3', function (
   it('should not support numbers with multiple decimals | vercel/ms behavior = undefined', function () {
     expect(isNaN(ms('1.2.3d'))).to.be(true);
   });
+
+  it('should not support a input with random characters at the end', function () {
+    expect(isNaN(ms('1.3abc'))).to.be(true);
+  });
+
+  it('should not support a input with random characters after a valid time unit', function () {
+    expect(isNaN(ms('1daysbc'))).to.be(true);
+  });
 });
