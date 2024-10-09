@@ -33,7 +33,7 @@ module.exports = function (val, options) {
   }
   throw new Error(
     'val is not a non-empty string or a valid number. val=' +
-    JSON.stringify(val)
+      JSON.stringify(val)
   );
 };
 
@@ -48,17 +48,32 @@ module.exports = function (val, options) {
 function parse(str) {
   str = String(str);
 
-  const l_Regex = /^((?<yearsValue>-?\d*\.?\d*)\s*(>years?|yrs?|y))?\s*((?<weeksValue>-?\d*\.?\d*)\s*(weeks?|w))?\s*((?<daysValue>-?\d*\.?\d*)\s*(days?|d))?\s*((?<hoursValue>-?\d*\.?\d*)\s*(hours?|hrs?|h))?\s*((?<minsValue>-?\d*\.?\d*)\s*(minutes?|mins?|m(?!s|i)))?\s*((?<secsValue>-?\d*\.?\d*)\s*(seconds?|secs?|s))?\s*((?<msecsValue>-?\d*\.?\d*)\s*(milliseconds?|msecs?|ms|$))?/gim;
+  const l_Regex = /(?:(-?\d*\.?\d*)\s*(?:years?|yrs?|y))?\s*(?:(-?\d*\.?\d*)\s*(?:weeks?|w))?\s*(?:(-?\d*\.?\d*)\s*(?:days?|d))?\s*(?:(-?\d*\.?\d*)\s*(?:hours?|hrs?|h))?\s*(?:(-?\d*\.?\d*)\s*(?:minutes?|mins?|m(?!s|i)))?\s*(?:(-?\d*\.?\d*)\s*(?:seconds?|secs?|s))?\s*(?:(-?\d*\.?\d*)\s*(?:milliseconds?|msecs?|ms|$))?/gim;
 
-  const l_Match = l_Regex.exec(
-    str,
-  );
+  const l_Match = l_Regex.exec(str);
 
-  if (!l_Match || Object.values(l_Match.groups).every(group => group === null || group === undefined)) {
+  if (
+    !l_Match ||
+    ![
+      l_Match[1],
+      l_Match[2],
+      l_Match[3],
+      l_Match[4],
+      l_Match[5],
+      l_Match[6],
+      l_Match[7],
+    ].some((group) => group !== undefined)
+  ) {
     return NaN;
   }
 
-  const { yearsValue, weeksValue, daysValue, hoursValue, minsValue, secsValue, msecsValue } = l_Match.groups;
+  const yearsValue = l_Match[1];
+  const weeksValue = l_Match[2];
+  const daysValue = l_Match[3];
+  const hoursValue = l_Match[4];
+  const minsValue = l_Match[5];
+  const secsValue = l_Match[6];
+  const msecsValue = l_Match[7];
 
   let l_TotalMS = 0;
 
