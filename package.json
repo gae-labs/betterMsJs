@@ -1,6 +1,6 @@
 {
   "name": "betterMsJs",
-  "version": "2024.10.06",
+  "version": "1.0.0",
   "description": "Millisecond conversion tool with support for multiple time units in a single input string",
   "repository": "gae-labs/betterMsJs",
   "main": "./index",
