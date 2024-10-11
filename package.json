@@ -1,8 +1,11 @@
 {
-  "name": "betterMsJs",
+  "name": "@gae-labs/better-ms",
   "version": "1.0.0",
   "description": "Millisecond conversion tool with support for multiple time units in a single input string",
-  "repository": "gae-labs/betterMsJs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gae-labs/betterMsJs.git"
+  },
   "main": "./index",
   "files": [
     "index.js"
@@ -34,5 +37,13 @@
     "lint-staged": "5.0.0",
     "mocha": "4.0.1",
     "prettier": "2.0.5"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/gae-labs/betterMsJs/issues"
+  },
+  "homepage": "https://github.com/gae-labs/betterMsJs#readme",
+  "keywords": [
+    "ms"
+  ],
+  "author": "gae-labs"
 }
