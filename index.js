@@ -8,6 +8,7 @@ var h = m * 60;
 var d = h * 24;
 var w = d * 7;
 var y = d * 365.25;
+var M = y / 12;
 
 /**
  * Parse or format the given `val`.
@@ -48,7 +49,7 @@ module.exports = function (val, options) {
 function parse(str) {
   str = String(str);
 
-  const l_Regex = /(?:(-?\d*\.?\d*)\s*(?:years?|yrs?|y)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:weeks?|w)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:days?|d)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:hours?|hrs?|h)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:minutes?|mins?|m(?!s|i))(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:seconds?|secs?|s)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:milliseconds?|msecs?|ms|$))?/gim;
+  const l_Regex = /(?:(-?\d*\.?\d*)\s*(?:years?|yrs?|y)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:months?|mos?|mths?)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:weeks?|w)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:days?|d)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:hours?|hrs?|h)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:minutes?|mins?|m(?!s|i))(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:seconds?|secs?|s)(?![A-Za-z]))?\s*(?:(-?\d*\.?\d*)\s*(?:milliseconds?|msecs?|ms|$))?/gim;
 
   const l_Match = l_Regex.exec(str);
 
@@ -62,22 +63,25 @@ function parse(str) {
       l_Match[5],
       l_Match[6],
       l_Match[7],
+      l_Match[8],
     ].some((group) => group !== undefined)
   ) {
     return NaN;
   }
 
   const yearsValue = l_Match[1];
-  const weeksValue = l_Match[2];
-  const daysValue = l_Match[3];
-  const hoursValue = l_Match[4];
-  const minsValue = l_Match[5];
-  const secsValue = l_Match[6];
-  const msecsValue = l_Match[7];
+  const monthsValue = l_Match[2];
+  const weeksValue = l_Match[3];
+  const daysValue = l_Match[4];
+  const hoursValue = l_Match[5];
+  const minsValue = l_Match[6];
+  const secsValue = l_Match[7];
+  const msecsValue = l_Match[8];
 
   let l_TotalMS = 0;
 
   if (yearsValue != undefined) l_TotalMS += parseFloat(yearsValue) * y;
+  if (monthsValue != undefined) l_TotalMS += parseFloat(monthsValue) * M;
   if (weeksValue != undefined) l_TotalMS += parseFloat(weeksValue) * w;
   if (daysValue != undefined) l_TotalMS += parseFloat(daysValue) * d;
   if (hoursValue != undefined) l_TotalMS += parseFloat(hoursValue) * h;

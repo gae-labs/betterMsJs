@@ -316,4 +316,10 @@ describe('BetterMsJS - Breaking Changes compared to vercel/ms 2.1.3', function (
   it('should not support a input with random characters after a valid time unit', function () {
     expect(isNaN(ms('1daysbc'))).to.be(true);
   });
+
+  it('should support months', function () {
+    expect(ms('1mo')).to.be(2629800000);
+    expect(ms('1mth')).to.be(2629800000);
+    expect(ms('1month')).to.be(2629800000);
+  });
 });
