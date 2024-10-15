@@ -1,6 +1,6 @@
 {
   "name": "@gae-labs/better-ms",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Millisecond conversion tool with support for multiple time units in a single input string",
   "repository": {
     "type": "git",
