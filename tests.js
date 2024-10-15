@@ -139,56 +139,34 @@ describe('ms(number, { long: true })', function () {
     }).to.not.throwError();
   });
 
-  it('should support milliseconds', function () {
-    expect(ms(500, { long: true })).to.be('500 ms');
-
-    expect(ms(-500, { long: true })).to.be('-500 ms');
-  });
-
   it('should support seconds', function () {
     expect(ms(1000, { long: true })).to.be('1 second');
-    expect(ms(1200, { long: true })).to.be('1 second');
     expect(ms(10000, { long: true })).to.be('10 seconds');
 
     expect(ms(-1000, { long: true })).to.be('-1 second');
-    expect(ms(-1200, { long: true })).to.be('-1 second');
     expect(ms(-10000, { long: true })).to.be('-10 seconds');
   });
 
   it('should support minutes', function () {
     expect(ms(60 * 1000, { long: true })).to.be('1 minute');
-    expect(ms(60 * 1200, { long: true })).to.be('1 minute');
     expect(ms(60 * 10000, { long: true })).to.be('10 minutes');
 
     expect(ms(-1 * 60 * 1000, { long: true })).to.be('-1 minute');
-    expect(ms(-1 * 60 * 1200, { long: true })).to.be('-1 minute');
     expect(ms(-1 * 60 * 10000, { long: true })).to.be('-10 minutes');
   });
 
   it('should support hours', function () {
     expect(ms(60 * 60 * 1000, { long: true })).to.be('1 hour');
-    expect(ms(60 * 60 * 1200, { long: true })).to.be('1 hour');
     expect(ms(60 * 60 * 10000, { long: true })).to.be('10 hours');
 
     expect(ms(-1 * 60 * 60 * 1000, { long: true })).to.be('-1 hour');
-    expect(ms(-1 * 60 * 60 * 1200, { long: true })).to.be('-1 hour');
     expect(ms(-1 * 60 * 60 * 10000, { long: true })).to.be('-10 hours');
   });
 
   it('should support days', function () {
     expect(ms(24 * 60 * 60 * 1000, { long: true })).to.be('1 day');
-    expect(ms(24 * 60 * 60 * 1200, { long: true })).to.be('1 day');
-    expect(ms(24 * 60 * 60 * 10000, { long: true })).to.be('10 days');
 
     expect(ms(-1 * 24 * 60 * 60 * 1000, { long: true })).to.be('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 1200, { long: true })).to.be('-1 day');
-    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true })).to.be('-10 days');
-  });
-
-  it('should round', function () {
-    expect(ms(234234234, { long: true })).to.be('3 days');
-
-    expect(ms(-234234234, { long: true })).to.be('-3 days');
   });
 });
 
@@ -233,16 +211,8 @@ describe('ms(number)', function () {
 
   it('should support days', function () {
     expect(ms(24 * 60 * 60 * 1000)).to.be('1d');
-    expect(ms(24 * 60 * 60 * 10000)).to.be('10d');
 
     expect(ms(-1 * 24 * 60 * 60 * 1000)).to.be('-1d');
-    expect(ms(-1 * 24 * 60 * 60 * 10000)).to.be('-10d');
-  });
-
-  it('should round', function () {
-    expect(ms(234234234)).to.be('3d');
-
-    expect(ms(-234234234)).to.be('-3d');
   });
 });
 
@@ -298,14 +268,14 @@ describe('ms(invalid inputs)', function () {
   });
 });
 
-//* BetterMsJS - Breaking Changes compared to vercel/ms 2.1.3
+//* BetterMsJs
 
-describe('BetterMsJS - Breaking Changes compared to vercel/ms 2.1.3', function () {
-  it('should support multiple time units in a single string | vercel/ms behavior = undefined', function () {
+describe('BetterMsJs', function () {
+  it('should support multiple time units in a single string', function () {
     expect(ms('1d2h3m4s')).to.be(93784000);
   });
 
-  it('should not support numbers with multiple decimals | vercel/ms behavior = undefined', function () {
+  it('should not support numbers with multiple decimals', function () {
     expect(isNaN(ms('1.2.3d'))).to.be(true);
   });
 
@@ -321,5 +291,92 @@ describe('BetterMsJS - Breaking Changes compared to vercel/ms 2.1.3', function (
     expect(ms('1mo')).to.be(2629800000);
     expect(ms('1mth')).to.be(2629800000);
     expect(ms('1month')).to.be(2629800000);
+  });
+
+  it('should support milliseconds', function () {
+    expect(ms(500, { long: true })).to.be('500 milliseconds');
+
+    expect(ms(-500, { long: true })).to.be('-500 milliseconds');
+  });
+
+  it('should support seconds and milliseconds', function () {
+    expect(ms(1200, { long: true })).to.be('1 second 200 milliseconds');
+
+    expect(ms(-1200, { long: true })).to.be('-1 second 200 milliseconds');
+  });
+
+  it('should support minutes and seconds', function () {
+    expect(ms(60 * 1200, { long: true })).to.be('1 minute 12 seconds');
+
+    expect(ms(-1 * 60 * 1200, { long: true })).to.be('-1 minute 12 seconds');
+  });
+
+  it('should support hours and minutes', function () {
+    expect(ms(60 * 60 * 1200, { long: true })).to.be('1 hour 12 minutes');
+
+    expect(ms(-1 * 60 * 60 * 1200, { long: true })).to.be('-1 hour 12 minutes');
+  });
+
+  it('should support days and hours', function () {
+    expect(ms(29 * 60 * 60 * 1000, { long: true })).to.be('1 day 5 hours');
+
+    expect(ms(-1 * 29 * 60 * 60 * 1000, { long: true })).to.be(
+      '-1 day 5 hours',
+    );
+  });
+
+  it('should support weeks and days', function () {
+    expect(ms(24 * 60 * 60 * 10000, { long: true })).to.be('1 week 3 days');
+
+    expect(ms(-1 * 24 * 60 * 60 * 10000, { long: true })).to.be(
+      '-1 week 3 days',
+    );
+  });
+
+  it('should support weeks and days', function () {
+    expect(ms(24 * 60 * 60 * 10000)).to.be('1w 3d');
+
+    expect(ms(-1 * 24 * 60 * 60 * 10000)).to.be('-1w 3d');
+  });
+
+  it('should support years and months', function () {
+    expect(ms(1000 * 60 * 60 * 24 * 365.25 * 3.5, { long: true })).to.be(
+      '3 years 6 months',
+    );
+    expect(ms(-1000 * 60 * 60 * 24 * 365.25 * 3.5, { long: true })).to.be(
+      '-3 years 6 months',
+    );
+  });
+
+  it('should support the minimum option', function () {
+    expect(ms(1000 * 89, { long: true, minimum: 1.5 })).to.be('89 seconds');
+    expect(ms(1000 * 90, { long: true, minimum: 1.5 })).to.be(
+      '1 minute 30 seconds',
+    );
+  });
+
+  it('should support the compact option', function () {
+    expect(ms(1000 * 90, { compact: true })).to.be('1m30s');
+    expect(ms(1000 * 90)).to.be('1m 30s');
+  });
+
+  it('should support the extraSpace option', function () {
+    expect(ms(1000 * 90, { extraSpace: true })).to.be('1 m 30 s');
+    expect(ms(1000 * 90)).to.be('1m 30s');
+  });
+
+  it('should support the exclude option', function () {
+    expect(ms(1000 * 90, { exclude: ['m'] })).to.be('90s');
+    expect(ms(1000 * 90, { exclude: ['m', 's'] })).to.be('90000ms');
+  });
+
+  it('should support the short option', function () {
+    expect(ms(1000 * 90, { short: true })).to.be('1m');
+    expect(ms(1000 * 90, { short: true, exclude: ['m'] })).to.be('90s');
+  });
+
+  it('should support the object option', function () {
+    expect(ms(1000 * 90, { object: true })).to.eql({ m: 1, s: 30 });
+    expect(ms(1000 * 90, { object: true, exclude: ['m'] })).to.eql({ s: 90 });
   });
 });

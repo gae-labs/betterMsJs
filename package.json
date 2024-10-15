@@ -12,21 +12,13 @@
   ],
   "scripts": {
     "precommit": "lint-staged",
-    "lint": "eslint lib/* bin/*",
+    "lint": "eslint *.js",
     "test": "mocha tests.js"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "node": true,
-      "es6": true
-    }
   },
   "lint-staged": {
     "*.js": [
       "npm run lint",
-      "prettier --single-quote --write",
-      "git add"
+      "prettier --single-quote --write"
     ]
   },
   "license": "MIT",
